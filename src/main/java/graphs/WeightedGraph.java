@@ -1,36 +1,12 @@
 package graphs;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Set;
 
 public class WeightedGraph {
     private final HashMap<Integer, Node> nodes = new HashMap<>();
 
     public WeightedGraph() {}
-
-    public WeightedGraph(List<List<Integer>> adjacencyMatrix) {
-        constructGraph(adjacencyMatrix);
-    }
-
-    private void constructGraph(List<List<Integer>> adjacencyMatrix) {
-        for (int i = 0; i < adjacencyMatrix.size(); ++i) {
-            Node node = new Node(i);
-            nodes.put(i, node);
-        }
-
-        for (int i = 0; i < adjacencyMatrix.size(); ++i) {
-            for (int j = 0; j < adjacencyMatrix.get(i).size(); ++j) {
-                int weight = adjacencyMatrix.get(i).get(j);
-
-                if (weight == 0) {
-                    continue;
-                }
-
-                connectNodes(i, j, weight);
-            }
-        }
-    }
 
     public void addNode(int nodeID) {
         if (nodes.containsKey(nodeID)) {
