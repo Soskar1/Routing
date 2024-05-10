@@ -1,18 +1,26 @@
 import graphs.WeightedGraph;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-
 public class Main {
     public static void main(String[] args) {
 
-        ArrayList<List<Integer>> adjacencyMatrix = new ArrayList<>();
-        adjacencyMatrix.add(Arrays.asList(0, 0, 7));
-        adjacencyMatrix.add(Arrays.asList(0, 0, 8));
-        adjacencyMatrix.add(Arrays.asList(7, 8, 0));
+        WeightedGraph graph = new WeightedGraph();
 
-        WeightedGraph graph = new WeightedGraph(adjacencyMatrix);
-        System.out.println("Hello");
+        graph.addNode(4);
+        graph.addNode(2);
+        graph.addNode(1);
+        graph.addNode(59);
+        graph.addNode(35);
+
+        graph.connectNodes(4, 2, 10);
+        graph.connectNodes(59, 35, 1);
+        graph.connectNodes(1, 4, 5);
+        graph.connectNodes(35, 4, 2);
+        graph.connectNodes(59, 1, 2);
+
+        graph.removeNode(0);
+        graph.removeNode(2);
+        graph.removeConnection(59, 1);
+
+        graph.updateWeight(1, 4, 222);
     }
 }

@@ -19,18 +19,17 @@ public class Node {
         adjacentNodes.put(node, weight);
     }
 
+    public Set<Node> getAdjacentNodes() {
+        return adjacentNodes.keySet();
+    }
+
     public void removeAdjacentNode(Node node) {
         adjacentNodes.remove(node);
     }
 
-    public void removeAdjacentNode(int id) {
-        Set<Node> nodes = adjacentNodes.keySet();
-
-        for (Node node : nodes) {
-            if (node.getId() == id) {
-                adjacentNodes.remove(node);
-                return;
-            }
+    public void updateWeight(Node node, int newWeight) {
+        if (adjacentNodes.containsKey(node)) {
+            adjacentNodes.replace(node, newWeight);
         }
     }
 }
