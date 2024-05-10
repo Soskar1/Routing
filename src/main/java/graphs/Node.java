@@ -3,31 +3,37 @@ package graphs;
 import java.util.HashMap;
 import java.util.Set;
 
-public class Node {
+public class Node<T> {
     private final int id;
-    private final HashMap<Node, Integer> adjacentNodes = new HashMap<>();
+    private final T value;
+    private final HashMap<Node<T>, Integer> adjacentNodes = new HashMap<>();
 
-    public Node(int id) {
+    public Node(int id, T value) {
         this.id = id;
+        this.value = value;
     }
 
     public int getId() {
         return id;
     }
 
-    public void addAdjacentNode(Node node, int weight) {
+    public T getValue() {
+        return value;
+    }
+
+    public void addAdjacentNode(Node<T> node, int weight) {
         adjacentNodes.put(node, weight);
     }
 
-    public Set<Node> getAdjacentNodes() {
+    public Set<Node<T>> getAdjacentNodes() {
         return adjacentNodes.keySet();
     }
 
-    public void removeAdjacentNode(Node node) {
+    public void removeAdjacentNode(Node<T> node) {
         adjacentNodes.remove(node);
     }
 
-    public void updateWeight(Node node, int newWeight) {
+    public void updateWeight(Node<T> node, int newWeight) {
         if (adjacentNodes.containsKey(node)) {
             adjacentNodes.replace(node, newWeight);
         }
