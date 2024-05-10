@@ -8,30 +8,7 @@ public class WeightedGraph<T> {
 
     public WeightedGraph() {}
 
-    public WeightedGraph(List<List<Integer>> adjacencyMatrix) {
-        constructGraph(adjacencyMatrix);
-    }
-
-    private void constructGraph(List<List<Integer>> adjacencyMatrix) {
-        for (int i = 0; i < adjacencyMatrix.size(); ++i) {
-            Node node = new Node(i);
-            nodes.put(i, node);
-        }
-
-        for (int i = 0; i < adjacencyMatrix.size(); ++i) {
-            for (int j = 0; j < adjacencyMatrix.get(i).size(); ++j) {
-                int weight = adjacencyMatrix.get(i).get(j);
-
-                if (weight == 0) {
-                    continue;
-                }
-
-                connectNodes(i, j, weight);
-            }
-        }
-    }
-
-    public void addNode(int nodeID) {
+    public void addNode(int nodeID, T value) {
         if (nodes.containsKey(nodeID)) {
             System.out.println("Node with id " + nodeID + " already exists");
             return;
