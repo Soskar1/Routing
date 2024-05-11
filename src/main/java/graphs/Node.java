@@ -25,6 +25,10 @@ public class Node<T> {
         adjacentNodes.put(node, weight);
     }
 
+    public boolean hasAdjacentNode(Node<T> node) {
+        return adjacentNodes.containsKey(node);
+    }
+
     public Set<Node<T>> getAdjacentNodes() {
         return adjacentNodes.keySet();
     }

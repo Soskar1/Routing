@@ -50,6 +50,17 @@ public class WeightedGraph<T> {
         }
     }
 
+    public boolean checkConnection(int firstNodeID, int secondNodeID) {
+        if (nodes.containsKey(firstNodeID) && nodes.containsKey(secondNodeID)) {
+            Node<T> tmp1 = nodes.get(firstNodeID);
+            Node<T> tmp2 = nodes.get(secondNodeID);
+
+            return tmp1.hasAdjacentNode(tmp2);
+        }
+
+        return false;
+    }
+
     public void removeNode(int nodeID) {
         if (!nodes.containsKey(nodeID)) {
             System.out.println("Node with id " + nodeID + " does not exist");

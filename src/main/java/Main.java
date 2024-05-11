@@ -1,4 +1,5 @@
 import network.Network;
+import network.Packet;
 import network.Router;
 
 import java.util.ArrayList;
@@ -7,11 +8,11 @@ public class Main {
     public static void main(String[] args) {
         Network network = new Network();
         ArrayList<Router> routers = new ArrayList<>();
-        routers.add(new Router());
-        routers.add(new Router());
-        routers.add(new Router());
-        routers.add(new Router());
-        routers.add(new Router());
+        routers.add(new Router("0"));
+        routers.add(new Router("1"));
+        routers.add(new Router("2"));
+        routers.add(new Router("3"));
+        routers.add(new Router("4"));
 
         network.addRouter(routers.get(0));
         network.addRouter(routers.get(1));
@@ -31,6 +32,8 @@ public class Main {
         network.connectRouters(routers.get(4), routers.get(3), 3);
 
         network.updateRoutingTables();
-        System.out.println("Hello");
+
+        Packet packet = new Packet(routers.get(0), routers.get(3), "ASDF");
+        network.sendPacket(packet);
     }
 }
