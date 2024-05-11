@@ -32,4 +32,10 @@ public class Network {
             graph.connectNodes(firstRouter.hashCode(), secondRouter.hashCode(), connectionCost);
         }
     }
+
+    public void updateRoutingTables() {
+
+    }
+
+
 }

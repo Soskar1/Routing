@@ -29,6 +29,10 @@ public class Node<T> {
         return adjacentNodes.keySet();
     }
 
+    public HashMap<Node<T>, Integer> getAdjacentNodesWithWeights() {
+        return adjacentNodes;
+    }
+
     public void removeAdjacentNode(Node<T> node) {
         adjacentNodes.remove(node);
     }

@@ -8,6 +8,18 @@ public class WeightedGraph<T> {
 
     public WeightedGraph() {}
 
+    public Set<Integer> getNodes() {
+        return nodes.keySet();
+    }
+
+    public Node<T> getNode(Integer nodeID) {
+        return nodes.get(nodeID);
+    }
+
+    public int size() {
+        return nodes.size();
+    }
+
     public void addNode(int nodeID, T value) {
         if (nodes.containsKey(nodeID)) {
             System.out.println("Node with id " + nodeID + " already exists");
