@@ -3,5 +3,9 @@ package network;
 import java.util.HashMap;
 
 public class Router {
-    private final HashMap<Router, Router> routingTable = new HashMap<>();
+    private HashMap<Integer, Integer> routingTable = new HashMap<>();
+
+    public void updateRoutingTable(HashMap<Integer, Integer> newRoutingTable) {
+        routingTable = newRoutingTable;
+    }
 }

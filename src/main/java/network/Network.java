@@ -1,8 +1,11 @@
 package network;
 
+import graphs.DijkstraJob;
 import graphs.WeightedGraph;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Set;
 
 public class Network {
     private final WeightedGraph<Router> graph;
@@ -34,8 +37,13 @@ public class Network {
     }
 
     public void updateRoutingTables() {
+        Set<Integer> nodeIDs = graph.getNodes();
 
+        for (Integer nodeID : nodeIDs) {
+            DijkstraJob job = new DijkstraJob(graph, nodeID);
+            HashMap<Integer, Integer> pathTree = job.execute();
+
+            graph.getNode(nodeID).getValue().updateRoutingTable(pathTree);
+        }
     }
-
-
 }
