@@ -2,6 +2,8 @@ package network;
 
 import graphs.DijkstraJob;
 import graphs.WeightedGraph;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -11,6 +13,7 @@ import java.util.Stack;
 public class Network {
     private final WeightedGraph<Router> graph;
     private final ArrayList<Router> routers;
+    private static Logger logger = LogManager.getLogger(Network.class);
 
     public Network() {
         graph = new WeightedGraph<>();
@@ -60,8 +63,7 @@ public class Network {
             return;
         }
 
-        System.out.println("Sending packet from router " + source.getName() +
-                " to router " + destination.getName());
+        logger.info("Sending packet from router {} to router {}", source.getName(), destination.getName());
 
         Stack<Integer> path = source.constructPath(destination.hashCode());
         if (path.size() == 1) {
@@ -76,12 +78,10 @@ public class Network {
             currentRouter = graph.getNode(currentRouterID).getValue();
             nextRouter = graph.getNode(nextRouterID).getValue();
 
-            System.out.println("Packet " + packet.getID() + " is now in router " + currentRouter.getName());
+            logger.debug("Packet {} is now in router {}", packet.getID(), currentRouter.getName());
 
             if (!graph.checkConnection(currentRouterID, nextRouterID)) {
-                System.out.println("Can't send packet from router " + currentRouter.getName() +
-                        " to router " + nextRouter.getName());
-
+                logger.warn("Can't send packet from router {} to router {}", currentRouter.getName(), nextRouter.getName());
                 return;
             }
 
@@ -93,6 +93,6 @@ public class Network {
         }
 
         currentRouter = graph.getNode(currentRouterID).getValue();
-        System.out.println("Packet " + packet.getID() + " reached the router " + currentRouter.getName());
+        logger.info("Packet {} reached the router {}", packet.getID(), currentRouter.getName());
     }
 }
