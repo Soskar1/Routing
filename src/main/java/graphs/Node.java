@@ -2,11 +2,12 @@ package graphs;
 
 import java.util.HashMap;
 import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
 
 public class Node<T> {
     private final int id;
     private final T value;
-    private final HashMap<Node<T>, Integer> adjacentNodes = new HashMap<>();
+    private final ConcurrentHashMap<Node<T>, Integer> adjacentNodes = new ConcurrentHashMap<>();
 
     public Node(int id, T value) {
         this.id = id;
@@ -33,7 +34,7 @@ public class Node<T> {
         return adjacentNodes.keySet();
     }
 
-    public HashMap<Node<T>, Integer> getAdjacentNodesWithWeights() {
+    public ConcurrentHashMap<Node<T>, Integer> getAdjacentNodesWithWeights() {
         return adjacentNodes;
     }
 

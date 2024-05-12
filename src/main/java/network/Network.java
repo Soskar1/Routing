@@ -32,6 +32,12 @@ public class Network implements Runnable {
         }
     }
 
+    public void addRouters(List<Router> routers) {
+        for (Router router : routers) {
+            addRouter(router);
+        }
+    }
+
     public void removeRouter(Router router) {
         if (routers.contains(router)) {
             graph.removeNode(router.hashCode());
@@ -115,26 +121,20 @@ public class Network implements Runnable {
         Integer currentRouterID = path.pop();
         Integer nextRouterID = path.peek();
         Router currentRouter;
-        Router nextRouter;
 
         while (!path.isEmpty()) {
-            currentRouter = graph.getNode(currentRouterID).getValue();
-            nextRouter = graph.getNode(nextRouterID).getValue();
-
-            pathLog.append(currentRouter.getName());
-            if (nextRouterID != null) {
-                pathLog.append(" -> ");
-            }
-
-            logger.debug("Packet {} is now in router {}", packet.getID(), currentRouter.getName());
-
             if (!graph.checkConnection(currentRouterID, nextRouterID)) {
-                logger.warn("Can't send packet from router {} to router {}", currentRouter.getName(), nextRouter.getName());
+                logger.warn("Can't send packet from router {} to router {}", currentRouterID, nextRouterID);
                 return -1;
             }
 
-            currentRouterID = path.pop();
+            currentRouter = graph.getNode(currentRouterID).getValue();
 
+            pathLog.append(currentRouter.getName()).append(" -> ");
+
+            logger.debug("Packet {} is now in router {}", packet.getID(), currentRouter.getName());
+
+            currentRouterID = path.pop();
             if (!path.isEmpty()) {
                 nextRouterID = path.peek();
             }

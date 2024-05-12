@@ -2,6 +2,7 @@ package graphs;
 
 import java.util.*;
 import java.util.concurrent.Callable;
+import java.util.concurrent.ConcurrentHashMap;
 
 public class DijkstraJob implements Callable<DijkstraJob> {
     private final WeightedGraph graph;
@@ -62,7 +63,7 @@ public class DijkstraJob implements Callable<DijkstraJob> {
         while (!queue.isEmpty()) {
             Node queuedNode = queue.poll();
 
-            HashMap<Node, Integer> adjacentNodeWeights = queuedNode.getAdjacentNodesWithWeights();
+            ConcurrentHashMap<Node, Integer> adjacentNodeWeights = queuedNode.getAdjacentNodesWithWeights();
             Set<Node> adjacentNodes = adjacentNodeWeights.keySet();
 
             for (Node node : adjacentNodes) {

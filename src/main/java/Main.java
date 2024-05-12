@@ -6,6 +6,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.Objects;
 
 public class Main {
@@ -17,16 +18,12 @@ public class Main {
         routers.add(new Router("2"));
         routers.add(new Router("3"));
         routers.add(new Router("4"));
+        routers.add(new Router("5"));
+        routers.add(new Router("6"));
+        routers.add(new Router("7"));
+        routers.add(new Router("8"));
 
-        network.addRouter(routers.get(0));
-        network.addRouter(routers.get(1));
-        network.addRouter(routers.get(2));
-        network.addRouter(routers.get(3));
-        network.addRouter(routers.get(4));
-        network.addRouter(routers.get(5));
-        network.addRouter(routers.get(6));
-        network.addRouter(routers.get(7));
-        network.addRouter(routers.get(8));
+        network.addRouters(routers);
 
         network.connectRouters(routers.get(0), routers.get(1), 3);
         network.connectRouters(routers.get(0), routers.get(2), 1);
@@ -52,6 +49,18 @@ public class Main {
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
         do {
             input = reader.readLine();
+
+            Iterator<Router> it = routers.iterator();
+            while (it.hasNext()) {
+                Router router = it.next();
+
+                if (Objects.equals(router.getName(), input)) {
+                    network.removeRouter(router);
+                    it.remove();
+                    break;
+                }
+            }
+
         } while (!Objects.equals(input, "stop"));
 
         packetSender.stop();
