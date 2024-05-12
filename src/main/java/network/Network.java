@@ -70,6 +70,8 @@ public class Network implements Runnable {
 
     public void stop() {
         isRunning = false;
+        threadPool.shutdownNow();
+        networkThread.interrupt();
     }
 
     private void updateRoutingTables() throws InterruptedException, ExecutionException {
@@ -108,13 +110,21 @@ public class Network implements Runnable {
             return -1;
         }
 
+        StringBuilder pathLog = new StringBuilder();
+
         Integer currentRouterID = path.pop();
         Integer nextRouterID = path.peek();
         Router currentRouter;
         Router nextRouter;
+
         while (!path.isEmpty()) {
             currentRouter = graph.getNode(currentRouterID).getValue();
             nextRouter = graph.getNode(nextRouterID).getValue();
+
+            pathLog.append(currentRouter.getName());
+            if (nextRouterID != null) {
+                pathLog.append(" -> ");
+            }
 
             logger.debug("Packet {} is now in router {}", packet.getID(), currentRouter.getName());
 
@@ -131,7 +141,9 @@ public class Network implements Runnable {
         }
 
         currentRouter = graph.getNode(currentRouterID).getValue();
-        logger.info("Packet {} reached the router {}", packet.getID(), currentRouter.getName());
+        pathLog.append(currentRouter.getName());
+
+        logger.info("Packet {} reached the router {}. Path: {}", packet.getID(), currentRouter.getName(), pathLog);
         return 1;
     }
 }

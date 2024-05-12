@@ -23,6 +23,10 @@ public class Main {
         network.addRouter(routers.get(2));
         network.addRouter(routers.get(3));
         network.addRouter(routers.get(4));
+        network.addRouter(routers.get(5));
+        network.addRouter(routers.get(6));
+        network.addRouter(routers.get(7));
+        network.addRouter(routers.get(8));
 
         network.connectRouters(routers.get(0), routers.get(1), 3);
         network.connectRouters(routers.get(0), routers.get(2), 1);
@@ -31,6 +35,13 @@ public class Main {
         network.connectRouters(routers.get(2), routers.get(3), 6);
         network.connectRouters(routers.get(4), routers.get(2), 4);
         network.connectRouters(routers.get(4), routers.get(3), 3);
+        network.connectRouters(routers.get(0), routers.get(5), 2);
+        network.connectRouters(routers.get(0), routers.get(8), 3);
+        network.connectRouters(routers.get(5), routers.get(8), 2);
+        network.connectRouters(routers.get(5), routers.get(6), 4);
+        network.connectRouters(routers.get(6), routers.get(8), 1);
+        network.connectRouters(routers.get(6), routers.get(7), 4);
+        network.connectRouters(routers.get(7), routers.get(8), 2);
 
         network.start();
 
