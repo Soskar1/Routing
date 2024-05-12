@@ -31,6 +31,10 @@ public class Network {
         }
     }
 
+    public ArrayList<Router> getRouters() {
+        return routers;
+    }
+
     public void connectRouters(Router firstRouter, Router secondRouter, int connectionCost) {
         if (routers.contains(firstRouter) && routers.contains(secondRouter)) {
             graph.connectNodes(firstRouter.hashCode(), secondRouter.hashCode(), connectionCost);
