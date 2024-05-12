@@ -14,11 +14,13 @@ public class PacketSender implements Runnable {
     private Thread thread;
     private boolean isRunning;
     private int sendPacketCount = 0;
+    private int maxResendTimes;
 
-    public PacketSender(Network network, int sendingIntervalInMillis) {
+    public PacketSender(Network network, int sendingIntervalInMillis, int maxResendTimes) {
         this.network = network;
         routers = network.getRouters();
         this.sendingIntervalInMillis = sendingIntervalInMillis;
+        this.maxResendTimes = maxResendTimes;
     }
 
     public void start() {
@@ -45,10 +47,15 @@ public class PacketSender implements Runnable {
                 } while (srcRouter == dstRouter);
 
                 Packet packet = new Packet(srcRouter, dstRouter, "Packet_" + sendPacketCount);
-                network.sendPacket(packet);
-                ++sendPacketCount;
+                int result;
+                int sending = 0;
+                do {
+                    ++sending;
+                    result = network.sendPacket(packet);
+                    Thread.sleep(sendingIntervalInMillis);
+                } while (result == -1 && sending <= maxResendTimes);
 
-                Thread.sleep(sendingIntervalInMillis);
+                ++sendPacketCount;
             } catch (InterruptedException e) {
                 throw new RuntimeException(e);
             }

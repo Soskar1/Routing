@@ -1,10 +1,12 @@
 package graphs;
 
 import java.util.*;
+import java.util.concurrent.Callable;
 
-public class DijkstraJob {
+public class DijkstraJob implements Callable<DijkstraJob> {
     private final WeightedGraph graph;
     private final Node startNode;
+    private final int startNodeID;
 
     private final HashMap<Integer, Integer> path = new HashMap<>();
     private final HashMap<Integer, Integer> distances = new HashMap<>();
@@ -27,13 +29,22 @@ public class DijkstraJob {
 
     public DijkstraJob(WeightedGraph graph, int startNodeID) {
         this.graph = graph;
+        this.startNodeID = startNodeID;
         this.startNode = graph.getNode(startNodeID);
     }
 
-    public HashMap<Integer, Integer> execute() {
-        dijkstra();
-
+    public HashMap<Integer, Integer> getPath() {
         return path;
+    }
+
+    public int getStartNodeID() {
+        return startNodeID;
+    }
+
+    @Override
+    public DijkstraJob call() {
+        dijkstra();
+        return this;
     }
 
     private void dijkstra() {

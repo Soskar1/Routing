@@ -10,7 +10,7 @@ import java.util.Objects;
 
 public class Main {
     public static void main(String[] args) throws IOException {
-        Network network = new Network();
+        Network network = new Network(15000);
         ArrayList<Router> routers = new ArrayList<>();
         routers.add(new Router("0"));
         routers.add(new Router("1"));
@@ -32,18 +32,18 @@ public class Main {
         network.connectRouters(routers.get(4), routers.get(2), 4);
         network.connectRouters(routers.get(4), routers.get(3), 3);
 
-        network.updateRoutingTables();
+        network.start();
 
-        PacketSender packetSender = new PacketSender(network, 2000);
+        PacketSender packetSender = new PacketSender(network, 2000, 2);
         packetSender.start();
 
         String input;
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
         do {
             input = reader.readLine();
-            System.out.println("USER INPUT: " + input);
         } while (!Objects.equals(input, "stop"));
 
         packetSender.stop();
+        network.stop();
     }
 }
